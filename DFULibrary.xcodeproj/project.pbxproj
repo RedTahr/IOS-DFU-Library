@@ -481,9 +481,11 @@
 					52C12B5D1C6B8B28004D9DB8 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = P97VTTKZ62;
+						LastSwiftMigration = 0800;
 					};
 					52C12B671C6B8B28004D9DB8 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -715,6 +717,7 @@
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/DFULibrary/Zip/minizip ${SRCROOT}/DFULibrary/HexToBinConverter";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "$(VALID_ARCHS)";
 			};
 			name = Debug;
@@ -747,6 +750,7 @@
 				SKIP_INSTALL = NO;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/DFULibrary/Zip/minizip ${SRCROOT}/DFULibrary/HexToBinConverter";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 2.3;
 				VALID_ARCHS = "$(VALID_ARCHS)";
 			};
 			name = Release;
@@ -758,6 +762,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nordicsemi.DFULibraryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -768,6 +773,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nordicsemi.DFULibraryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

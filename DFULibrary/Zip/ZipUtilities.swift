@@ -71,8 +71,10 @@ internal class ZipUtilities {
         var processedFilePaths = [ProcessedFilePath]()
         if let directoryPath = directory.path, let enumerator = fileManager.enumeratorAtPath(directoryPath) {
             while let filePathComponent = enumerator.nextObject() as? String {
-                let path = directory.URLByAppendingPathComponent(filePathComponent)
-                guard let filePath = path.path, let directoryName = directory.lastPathComponent else {
+                guard let path = directory.URLByAppendingPathComponent(filePathComponent),
+                    filePath = path.path,
+                    let directoryName = directory.lastPathComponent
+                else {
                     continue
                 }
                 var isDirectory: ObjCBool = false
