@@ -199,11 +199,7 @@ internal struct PacketReceiptNotification {
 }
 
 @objc internal class DFUControlPoint : NSObject, CBPeripheralDelegate {
-    static let UUID = CBUUID(string: "00001531-1212-EFDE-1523-785FEABCD123")
-    
-    static func matches(characteristic:CBCharacteristic) -> Bool {
-        return characteristic.UUID.isEqual(UUID)
-    }
+    static let defaultUUID = CBUUID(string: "00001531-1212-EFDE-1523-785FEABCD123")
     
     private var characteristic:CBCharacteristic
     private var logger:LoggerHelper
@@ -246,8 +242,8 @@ internal struct PacketReceiptNotification {
         // Set the peripheral delegate to self
         peripheral.delegate = self
         
-        logger.v("Enabling notifiactions for \(DFUControlPoint.UUID.UUIDString)...")
-        logger.d("peripheral.setNotifyValue(true, forCharacteristic: \(DFUControlPoint.UUID.UUIDString))")
+        logger.v("Enabling notifiactions for \(characteristic.UUID.UUIDString)...")
+        logger.d("peripheral.setNotifyValue(true, forCharacteristic: \(characteristic.UUID.UUIDString))")
         peripheral.setNotifyValue(true, forCharacteristic: characteristic)
     }
     
@@ -278,8 +274,8 @@ internal struct PacketReceiptNotification {
         default:
             break
         }
-        logger.v("Writing to characteristic \(DFUControlPoint.UUID.UUIDString)...")
-        logger.d("peripheral.writeValue(0x\(request.data.hexString), forCharacteristic: \(DFUControlPoint.UUID.UUIDString), type: WithResponse)")
+        logger.v("Writing to characteristic \(characteristic.UUID.UUIDString)...")
+        logger.d("peripheral.writeValue(0x\(request.data.hexString), forCharacteristic: \(characteristic.UUID.UUIDString), type: WithResponse)")
         peripheral.writeValue(request.data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithResponse)
     }
     
@@ -329,7 +325,7 @@ internal struct PacketReceiptNotification {
                 success?()
             }
         } else {
-            logger.i("Data written to \(DFUControlPoint.UUID.UUIDString)")
+            logger.i("Data written to \(characteristic.UUID.UUIDString)")
             
             switch request! {
             case .StartDfu(_), .StartDfu_v1,  .ValidateFirmware:

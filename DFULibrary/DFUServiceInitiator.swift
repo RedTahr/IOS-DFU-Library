@@ -118,6 +118,12 @@ import CoreBluetooth
      The DFU service UUID.
      */
     public var serviceUUID = DFUServiceInitiator.defaultServiceUUID
+
+    /// The DFU control point characteristic UUID to search for
+    public var controlPointCharacteristicUUID = DFUControlPoint.defaultUUID
+
+    /// The DFU packet characteristic UUID to search for
+    public var packetCharacteristicUUID = DFUPacket.defaultUUID
     
     /**
      The number of packets of firmware data to be received by the DFU target before sending

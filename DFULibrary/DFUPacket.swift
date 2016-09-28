@@ -23,11 +23,7 @@
 import CoreBluetooth
 
 internal class DFUPacket {
-    static private let UUID = CBUUID(string: "00001532-1212-EFDE-1523-785FEABCD123")
-    
-    static func matches(characteristic:CBCharacteristic) -> Bool {
-        return characteristic.UUID.isEqual(UUID)
-    }
+    static let defaultUUID = CBUUID(string: "00001532-1212-EFDE-1523-785FEABCD123")
     
     private let PacketSize = 20
     
@@ -71,7 +67,7 @@ internal class DFUPacket {
             data.appendBytes(UnsafePointer(blSize), length: 4)
             data.appendBytes(UnsafePointer(appSize), length: 4)
         }
-        logger.v("Writing image sizes (\(size.softdevice)b, \(size.bootloader)b, \(size.application)b) to characteristic \(DFUPacket.UUID.UUIDString)...")
+        logger.v("Writing image sizes (\(size.softdevice)b, \(size.bootloader)b, \(size.application)b) to characteristic \(characteristic.UUID.UUIDString)...")
         logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUVersion.UUID.UUIDString), type: WithoutResponse)")
         peripheral.writeValue(data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
     }
@@ -91,7 +87,7 @@ internal class DFUPacket {
             appSize in
             data.appendBytes(UnsafePointer(appSize), length: 4)
         }
-        logger.v("Writing image size (\(size.application)b) to characteristic \(DFUPacket.UUID.UUIDString)...")
+        logger.v("Writing image size (\(size.application)b) to characteristic \(characteristic.UUID.UUIDString)...")
         logger.d("peripheral.writeValue(0x\(data.hexString), forCharacteristic: \(DFUVersion.UUID.UUIDString), type: WithoutResponse)")
         peripheral.writeValue(data, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
     }
@@ -113,7 +109,7 @@ internal class DFUPacket {
             let packetLength = min(bytesToSend, PacketSize)
             let packet = data.subdataWithRange(NSRange(location: offset, length: packetLength))
             
-            logger.v("Writing to characteristic \(DFUPacket.UUID.UUIDString)...")
+            logger.v("Writing to characteristic \(characteristic.UUID.UUIDString)...")
             logger.d("peripheral.writeValue(0x\(packet.hexString), forCharacteristic: \(DFUVersion.UUID.UUIDString), type: WithoutResponse)")
             peripheral.writeValue(packet, forCharacteristic: characteristic, type: CBCharacteristicWriteType.WithoutResponse)
             

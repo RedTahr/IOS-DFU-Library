@@ -48,6 +48,9 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
     private var report:ErrorCallback?
     /// A temporaty callback used to report progress status.
     private var progressDelegate:DFUProgressDelegate?
+
+    private let packetCharacteristicUUID: CBUUID
+    private let controlPointCharacteristicUUID: CBUUID
     
     // -- Properties stored when upload started in order to resume it --
     private var firmware:DFUFirmware?
@@ -56,9 +59,11 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
     
     // MARK: - Initialization
     
-    init(_ service:CBService, _ logger:LoggerHelper) {
+    init(_ service:CBService, _ logger:LoggerHelper, packetCharacteristicUUID: CBUUID, controlPointCharacteristicUUID: CBUUID) {
         self.service = service
         self.logger = logger
+        self.packetCharacteristicUUID = packetCharacteristicUUID
+        self.controlPointCharacteristicUUID = controlPointCharacteristicUUID
         super.init()
     }
     
@@ -459,9 +464,9 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
             
             // Find DFU characteristics
             for characteristic in service.characteristics! {
-                if (DFUPacket.matches(characteristic)) {
+                if (characteristic.UUID == packetCharacteristicUUID) {
                     dfuPacketCharacteristic = DFUPacket(characteristic, logger)
-                } else if (DFUControlPoint.matches(characteristic)) {
+                } else if (characteristic.UUID == controlPointCharacteristicUUID) {
                     dfuControlPointCharacteristic = DFUControlPoint(characteristic, logger)
                 } else if (DFUVersion.matches(characteristic)) {
                     dfuVersionCharacteristic = DFUVersion(characteristic, logger)

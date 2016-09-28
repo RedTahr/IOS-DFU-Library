@@ -51,6 +51,10 @@ import CoreBluetooth
     private var resetting = false
     /// The DFU service UUID to search for
     private let serviceUUID: CBUUID
+    /// The DFU control point characteristic UUID to search for
+    private let controlPointCharacteristicUUID: CBUUID
+    /// The DFU packet characteristic UUID to search for
+    private let packetCharacteristicUUID: CBUUID
     
     // MARK: - Initialization
     
@@ -58,6 +62,8 @@ import CoreBluetooth
         self.centralManager = initiator.centralManager
         self.peripheral = initiator.target
         self.serviceUUID = initiator.serviceUUID
+        self.packetCharacteristicUUID = initiator.packetCharacteristicUUID
+        self.controlPointCharacteristicUUID = initiator.controlPointCharacteristicUUID
         self.logger = LoggerHelper(initiator)
         super.init()
         
@@ -435,7 +441,7 @@ import CoreBluetooth
                     logger.v("DFU Service found")
                     
                     // DFU Service has been found. Discover characteristics...
-                    dfuService = DFUService(service, logger)
+                    dfuService = DFUService(service, logger, packetCharacteristicUUID: packetCharacteristicUUID, controlPointCharacteristicUUID: controlPointCharacteristicUUID)
                     dfuService?.targetPeripheral = self
                     dfuService!.discoverCharacteristics(
                         onSuccess: { () -> () in self.delegate?.onDeviceReady() },
