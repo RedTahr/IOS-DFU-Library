@@ -55,6 +55,9 @@ import CoreBluetooth
     private let controlPointCharacteristicUUID: CBUUID
     /// The DFU packet characteristic UUID to search for
     private let packetCharacteristicUUID: CBUUID
+
+    /// If `true`, the expanded init packet will be sent even if the version is not present.
+    private let allowInitPacketWithoutVersion: Bool
     
     // MARK: - Initialization
     
@@ -64,6 +67,7 @@ import CoreBluetooth
         self.serviceUUID = initiator.serviceUUID
         self.packetCharacteristicUUID = initiator.packetCharacteristicUUID
         self.controlPointCharacteristicUUID = initiator.controlPointCharacteristicUUID
+        self.allowInitPacketWithoutVersion = initiator.allowInitPacketWithoutVersion
         self.logger = LoggerHelper(initiator)
         super.init()
         
@@ -441,7 +445,14 @@ import CoreBluetooth
                     logger.v("DFU Service found")
                     
                     // DFU Service has been found. Discover characteristics...
-                    dfuService = DFUService(service, logger, packetCharacteristicUUID: packetCharacteristicUUID, controlPointCharacteristicUUID: controlPointCharacteristicUUID)
+                    dfuService = DFUService(
+                        service,
+                        logger,
+                        packetCharacteristicUUID: packetCharacteristicUUID,
+                        controlPointCharacteristicUUID: controlPointCharacteristicUUID,
+                        allowInitPacketWithoutVersion: allowInitPacketWithoutVersion
+                    )
+
                     dfuService?.targetPeripheral = self
                     dfuService!.discoverCharacteristics(
                         onSuccess: { () -> () in self.delegate?.onDeviceReady() },

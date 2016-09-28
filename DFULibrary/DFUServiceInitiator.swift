@@ -124,6 +124,9 @@ import CoreBluetooth
 
     /// The DFU packet characteristic UUID to search for
     public var packetCharacteristicUUID = DFUPacket.defaultUUID
+
+    /// If `true`, the expanded init packet will be sent even if the version is not present.
+    public var allowInitPacketWithoutVersion = false
     
     /**
      The number of packets of firmware data to be received by the DFU target before sending

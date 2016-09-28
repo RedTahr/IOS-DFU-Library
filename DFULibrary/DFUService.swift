@@ -51,6 +51,9 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
 
     private let packetCharacteristicUUID: CBUUID
     private let controlPointCharacteristicUUID: CBUUID
+
+    /// If `true`, the expanded init packet will be sent even if the version is not present.
+    private let allowInitPacketWithoutVersion: Bool
     
     // -- Properties stored when upload started in order to resume it --
     private var firmware:DFUFirmware?
@@ -59,11 +62,12 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
     
     // MARK: - Initialization
     
-    init(_ service:CBService, _ logger:LoggerHelper, packetCharacteristicUUID: CBUUID, controlPointCharacteristicUUID: CBUUID) {
+    init(_ service:CBService, _ logger:LoggerHelper, packetCharacteristicUUID: CBUUID, controlPointCharacteristicUUID: CBUUID, allowInitPacketWithoutVersion: Bool) {
         self.service = service
         self.logger = logger
         self.packetCharacteristicUUID = packetCharacteristicUUID
         self.controlPointCharacteristicUUID = controlPointCharacteristicUUID
+        self.allowInitPacketWithoutVersion = allowInitPacketWithoutVersion
         super.init()
     }
     
@@ -223,7 +227,7 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
         // http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v11.0.0/bledfu_example_init.html?cp=4_0_0_4_2_1_1_3
         // (or another version of this page, matching your DFU version)
         
-        if version != nil {
+        if version != nil || allowInitPacketWithoutVersion {
             if data.length < 14 {
                 // Init packet validation would have failed. We can safely abort here.
                 report(error: DFUError.ExtendedInitPacketRequired, withMessage: "Extended init packet required. Old one found instead.")
