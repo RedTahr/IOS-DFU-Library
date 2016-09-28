@@ -58,7 +58,10 @@ import CoreBluetooth
 
     /// If `true`, the expanded init packet will be sent even if the version is not present.
     private let allowInitPacketWithoutVersion: Bool
-    
+
+    /// If `true`, DFU may proceed without sending an init packet.
+    private let allowNoInitPacket: Bool
+
     // MARK: - Initialization
     
     init(_ initiator:DFUServiceInitiator) {
@@ -68,6 +71,7 @@ import CoreBluetooth
         self.packetCharacteristicUUID = initiator.packetCharacteristicUUID
         self.controlPointCharacteristicUUID = initiator.controlPointCharacteristicUUID
         self.allowInitPacketWithoutVersion = initiator.allowInitPacketWithoutVersion
+        self.allowNoInitPacket = initiator.allowNoInitPacket
         self.logger = LoggerHelper(initiator)
         super.init()
         
@@ -450,7 +454,8 @@ import CoreBluetooth
                         logger,
                         packetCharacteristicUUID: packetCharacteristicUUID,
                         controlPointCharacteristicUUID: controlPointCharacteristicUUID,
-                        allowInitPacketWithoutVersion: allowInitPacketWithoutVersion
+                        allowInitPacketWithoutVersion: allowInitPacketWithoutVersion,
+                        allowNoInitPacket: allowNoInitPacket
                     )
 
                     dfuService?.targetPeripheral = self

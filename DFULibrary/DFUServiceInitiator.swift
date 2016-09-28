@@ -127,6 +127,9 @@ import CoreBluetooth
 
     /// If `true`, the expanded init packet will be sent even if the version is not present.
     public var allowInitPacketWithoutVersion = false
+
+    /// If `true`, DFU may proceed without sending an init packet.
+    public var allowNoInitPacket = false
     
     /**
      The number of packets of firmware data to be received by the DFU target before sending

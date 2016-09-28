@@ -54,6 +54,9 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
 
     /// If `true`, the expanded init packet will be sent even if the version is not present.
     private let allowInitPacketWithoutVersion: Bool
+
+    /// If `true`, DFU may proceed without sending an init packet.
+    private let allowNoInitPacket: Bool
     
     // -- Properties stored when upload started in order to resume it --
     private var firmware:DFUFirmware?
@@ -62,12 +65,13 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
     
     // MARK: - Initialization
     
-    init(_ service:CBService, _ logger:LoggerHelper, packetCharacteristicUUID: CBUUID, controlPointCharacteristicUUID: CBUUID, allowInitPacketWithoutVersion: Bool) {
+    init(_ service:CBService, _ logger:LoggerHelper, packetCharacteristicUUID: CBUUID, controlPointCharacteristicUUID: CBUUID, allowInitPacketWithoutVersion: Bool, allowNoInitPacket: Bool) {
         self.service = service
         self.logger = logger
         self.packetCharacteristicUUID = packetCharacteristicUUID
         self.controlPointCharacteristicUUID = controlPointCharacteristicUUID
         self.allowInitPacketWithoutVersion = allowInitPacketWithoutVersion
+        self.allowNoInitPacket = allowNoInitPacket
         super.init()
     }
     
@@ -256,14 +260,11 @@ internal typealias ErrorCallback = (error:DFUError, withMessage:String) -> Void
             if data.length == 2 {
                 dfuControlPointCharacteristic!.send(Request.InitDfuParameters_v1, onSuccess: success, onError: report)
                 dfuPacketCharacteristic!.sendInitPacket(data)
+            } else if allowNoInitPacket {
+                success()
             } else {
-                // After sending the Extended Init Packet, the DFU would fail on CRC validation eventually. 
-                
-                // NOTE!
-                // We can do 2 thing: abort, with an error:
+                // After sending the Extended Init Packet, the DFU would fail on CRC validation eventually.
                 report(error: DFUError.InitPacketRequired, withMessage: "Init packet with 2-byte CRC supported. Extended init packet found.")
-                // ..or ignore it and do not send any init packet (not safe!):
-                // success()
             }
         }
     }
