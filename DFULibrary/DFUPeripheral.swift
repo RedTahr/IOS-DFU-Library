@@ -49,12 +49,15 @@ import CoreBluetooth
     private var aborted = false
     /// A flag set when device is resetting
     private var resetting = false
+    /// The DFU service UUID to search for
+    private let serviceUUID: CBUUID
     
     // MARK: - Initialization
     
     init(_ initiator:DFUServiceInitiator) {
         self.centralManager = initiator.centralManager
         self.peripheral = initiator.target
+        self.serviceUUID = initiator.serviceUUID
         self.logger = LoggerHelper(initiator)
         super.init()
         
@@ -428,7 +431,7 @@ import CoreBluetooth
             // Find the DFU Service
             let services = peripheral.services!
             for service in services {
-                if DFUService.matches(service) {
+                if service.UUID == serviceUUID {
                     logger.v("DFU Service found")
                     
                     // DFU Service has been found. Discover characteristics...

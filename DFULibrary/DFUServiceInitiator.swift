@@ -70,7 +70,7 @@ import CoreBluetooth
     }
     
     func filterBy() -> [CBUUID]? {
-        return [DFUService.UUID]
+        return [DFUServiceInitiator.defaultServiceUUID]
     }
 }
 
@@ -110,6 +110,14 @@ import CoreBluetooth
      Ignore this property if not updating Softdevice and Application from one ZIP file.
      */
     public var peripheralSelector:DFUPeripheralSelector
+
+
+    internal static let defaultServiceUUID = CBUUID(string: "00001530-1212-EFDE-1523-785FEABCD123")
+
+    /**
+     The DFU service UUID.
+     */
+    public var serviceUUID = DFUServiceInitiator.defaultServiceUUID
     
     /**
      The number of packets of firmware data to be received by the DFU target before sending
