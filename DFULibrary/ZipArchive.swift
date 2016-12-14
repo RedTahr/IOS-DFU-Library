@@ -22,7 +22,7 @@
 
 // import Zip
 
-internal class ZipArchive {
+public class ZipArchive {
     
     private init() {
         // Forbid creating instance of this class
@@ -39,7 +39,7 @@ internal class ZipArchive {
      
      - returns: list of URLs to unzipped files in the tmp folder
      */
-    internal static func unzip(url:NSURL) throws -> [NSURL] {
+    public static func unzip(url:NSURL) throws -> [NSURL] {
         let fileName = url.lastPathComponent
         let destinationPath = try createTemporaryFolderPath(fileName!)
         
@@ -65,7 +65,7 @@ internal class ZipArchive {
      
      - returns: a path to the tmp folder
      */
-    internal static func createTemporaryFolderPath(name:String) throws -> String {
+    public static func createTemporaryFolderPath(name:String) throws -> String {
         // Build the temp folder path. Content of the ZIP file will be copied into it
         let tempPath = NSTemporaryDirectory() + ".dfu/unzip/" + name + "/"
         
