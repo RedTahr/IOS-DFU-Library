@@ -29,7 +29,7 @@ internal enum ZipError: ErrorType {
 }
 
 /// Zip class
-internal class Zip {
+public class Zip {
     
     // MARK: Lifecycle
     
@@ -55,7 +55,7 @@ internal class Zip {
      - throws: Error if unzipping fails or if fail is not found. Can be printed with a description variable.
      */
 
-    internal class func unzipFile(zipFilePath: NSURL, destination: NSURL, overwrite: Bool, password: String?, progress: ((progress: Double) -> ())?) throws {
+    public class func unzipFile(zipFilePath: NSURL, destination: NSURL, overwrite: Bool, password: String?, progress: ((progress: Double) -> ())?) throws {
         
         // File manager
         let fileManager = NSFileManager.defaultManager()
