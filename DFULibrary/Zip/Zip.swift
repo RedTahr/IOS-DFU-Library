@@ -185,7 +185,7 @@ public class Zip {
 
     - throws: Error if zipping fails.
     */
-    internal class func zipFiles(paths: [NSURL], zipFilePath: NSURL, password: String?, progress: ((progress: Double) -> ())?) throws {
+    public class func zipFiles(paths: [NSURL], zipFilePath: NSURL, password: String?, progress: ((progress: Double) -> ())?) throws {
         
         // File manager
         let fileManager = NSFileManager.defaultManager()
