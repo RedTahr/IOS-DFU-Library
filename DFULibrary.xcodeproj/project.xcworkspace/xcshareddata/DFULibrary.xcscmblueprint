@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "B472D40B67C8E30E36505BF43B9EC0E96CFBFCB6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "B472D40B67C8E30E36505BF43B9EC0E96CFBFCB6" : 9223372036854775807,
+    "28BA2893519A8666927C8039C512BC00CC57A6DC" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5E30DDE1-6DB0-474C-B8DE-E1696070FC55",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "B472D40B67C8E30E36505BF43B9EC0E96CFBFCB6" : "iOS-DFU-Library\/",
+    "28BA2893519A8666927C8039C512BC00CC57A6DC" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DFULibrary",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DFULibrary.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:Ringly\/ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "28BA2893519A8666927C8039C512BC00CC57A6DC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ringly\/IOS-DFU-Library.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B472D40B67C8E30E36505BF43B9EC0E96CFBFCB6"
+    }
+  ]
+}
