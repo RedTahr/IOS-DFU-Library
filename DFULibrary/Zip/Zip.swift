@@ -16,14 +16,15 @@ internal enum ZipError: Error {
     /// Unzip fail
     case unzipFail
     /// Zip fail
-    case zipFail
+    case zipFailedBecauseInputWasNil
+    case zipFailed
 
     /// User readable description
     internal var description: String {
         switch self {
         case .fileNotFound: return NSLocalizedString("File not found.", comment: "")
         case .unzipFail: return NSLocalizedString("Failed to unzip file.", comment: "")
-        case .zipFail: return NSLocalizedString("Failed to zip file.", comment: "")
+        case .zipFailedBecauseInputWasNil, .zipFailed: return NSLocalizedString("Failed to zip file.", comment: "")
         }
     }
 }
@@ -220,7 +221,7 @@ open class Zip {
             if !isDirectory.boolValue {
                 let input = fopen(filePath, "r")
                 if input == nil {
-                    throw ZipError.zipFail
+                    throw ZipError.zipFailedBecauseInputWasNil
                 }
                 let fileName = path.fileName
                 var zipInfo: zip_fileinfo = zip_fileinfo(tmz_date: tm_zip(tm_sec: 0, tm_min: 0, tm_hour: 0, tm_mday: 0, tm_mon: 0, tm_year: 0), dosDate: 0, internal_fa: 0, external_fa: 0)
@@ -248,7 +249,7 @@ open class Zip {
                     zipOpenNewFileInZip3(zip, fileName, &zipInfo, nil, 0, nil, 0, nil,Z_DEFLATED, Z_DEFAULT_COMPRESSION, 0, -MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY, nil, 0)
                 }
                 else {
-                    throw ZipError.zipFail
+                    throw ZipError.zipFailed
                 }
                 var length: Int = 0
                 while (feof(input) == 0) {
