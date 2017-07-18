@@ -404,7 +404,12 @@ import CoreBluetooth
         } else {
             logger.d("[Callback] Central Manager did disconnect peripheral without error")
             logger.i("Disconnected")
-            delegate?.didDeviceDisconnect()
+            if peripheral.state != .connected {
+                delegate?.didDeviceDisconnectWithError(NSError.init(domain: "BluetoothOffError", code: 0, userInfo: nil))
+            }
+            else {
+                delegate?.didDeviceDisconnect()
+            }
         }
     }
     
