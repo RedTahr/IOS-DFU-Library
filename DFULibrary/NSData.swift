@@ -22,20 +22,17 @@
 
 // Source: http://stackoverflow.com/a/35201226/2115352
 
-extension NSData {
+extension Data {
     
     internal var hexString: String {
-        let pointer = UnsafePointer<UInt8>(bytes)
-        let array = getByteArray(pointer)
-        
-        return array.reduce("") { (result, byte) -> String in
-            result.stringByAppendingString(String(format: "%02x", byte))
-        }
-    }
-    
-    private func getByteArray(pointer: UnsafePointer<UInt8>) -> [UInt8] {
-        let buffer = UnsafeBufferPointer<UInt8>(start: pointer, count: length)
-        
-        return [UInt8](buffer)
+        let count = self.count
+
+        return withUnsafeBytes({ (ptr: UnsafePointer<UInt8>) -> String in
+            let bytes = (0..<count).lazy.map({ ptr.advanced(by: $0).pointee })
+
+            return bytes.reduce("", { (result, byte) -> String in
+                result + String(format: "%02x", byte)
+            })
+        })
     }
 }
