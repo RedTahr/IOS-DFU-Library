@@ -480,7 +480,7 @@
 				TargetAttributes = {
 					52C12B5D1C6B8B28004D9DB8 = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0900;
 					};
 					52C12B671C6B8B28004D9DB8 = {
 						CreatedOnToolsVersion = 7.2;
@@ -716,7 +716,8 @@
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/DFULibrary/Zip/minizip ${SRCROOT}/DFULibrary/HexToBinConverter";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = "$(VALID_ARCHS)";
 			};
 			name = Debug;
@@ -747,7 +748,8 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "${SRCROOT}/DFULibrary/Zip/minizip ${SRCROOT}/DFULibrary/HexToBinConverter";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = "$(VALID_ARCHS)";
 			};
 			name = Release;
